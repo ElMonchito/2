@@ -2,7 +2,7 @@ import React from 'react'
 
 const AppFrom = () => {
   return (
-    <div>
+    <div style={{background:"red"}}>
         formulario AppFrom.js
     </div>
   )
