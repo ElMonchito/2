@@ -40,7 +40,9 @@ function App() {
         placeholder="Código de persona" /> 
 
       <button onClick={appCrear} >Guardar</button>
+      <br></br>
       <button onClick={appDelete}>Eliminar</button>
+      <br></br>
       <button onClick={appUpdate}>Actualizar</button>
 
       {
