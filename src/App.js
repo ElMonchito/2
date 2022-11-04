@@ -38,7 +38,8 @@ function App() {
         placeholder="Nombres completos" /> 
       <input type="text" onChange={ e => setCodigo(e.target.value)} 
         placeholder="Código de persona" /> 
-
+        
+      <br></br>
       <button onClick={appCrear} >Guardar</button>
       <br></br>
       <button onClick={appDelete}>Eliminar</button>
