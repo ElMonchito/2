@@ -1,11 +1,11 @@
 import React from 'react'
 
-const AppFrom = () => {
+const AppForm = () => {
   return (
     <div style={{background:"red"}}>
-        formulario AppFrom.js
+        formulario AppForm.js
     </div>
   )
 }
 
-export default AppFrom
+export default AppForm
