@@ -6,6 +6,7 @@ function App() {
   const [codigo, setCodigo] = useState(null);
   const [registro, setRegistro] = useState(null);
   
+  
   const appCrear = () => {
     fnCrear(nombre);
     appRead();
@@ -33,12 +34,15 @@ function App() {
   }
 
   return (
-    <div className="App">
+    
+    <div className="App"  style={{background: "black", width:"350px", color:"cyan"}} >
+      <h1>TAREA 1</h1>
       <input type="text" onChange={ e => setNombre(e.target.value)} 
         placeholder="Nombres completos" /> 
+      <br></br>  
       <input type="text" onChange={ e => setCodigo(e.target.value)} 
         placeholder="Código de persona" /> 
-        
+
       <br></br>
       <button onClick={appCrear} >Guardar</button>
       <br></br>
