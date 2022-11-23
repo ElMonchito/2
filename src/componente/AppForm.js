@@ -1,5 +1,6 @@
-import { addDoc, collection } from 'firebase/firestore';
-import React, {useState} from 'react'
+import { async } from '@firebase/util';
+import {collection, doc, getDoc, addDoc, updateDoc } from 'firebase/firestore';
+import React, {useState, useEffect} from 'react'
 import {db} from "./firebase";
 
 const AppForm = (props) => {
@@ -10,28 +11,28 @@ const AppForm = (props) => {
     const [objeto, setObjeto] = useState(camposRegistro);
 
     const handleStatusChange = (e) => {      //Manejar cambios en form
-        const {name, value} = e.target;
-        setObjeto({...objeto, [name]:value });
-        console.log(objeto);
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
 
         try {
-            if(props.idActual === ""){
+            e.preventDefault();
+            if(props.idActual===""){
                 if(validarForm()){
-                    addDoc(collection(db, 'persona'), objeto);
-                    console.log("Se guardo registro en BD...");
+                    addDoc(collection(db,"persona"), objeto);
+                    console.log("Se Guardo");    
                 }else{
-                    console.log("NO se guardo...");
+                    console.log("No Se Guardo");   
                 }
             }else{
-                console.log("ACTUALIZAR REGISTRO...");
+                await updateDoc(doc(collection(db, "persona"), props.idActual),objeto);
+                console.log ("Se Actualizo ...");
+                props.setIdActual('');
             }
-            
+            setObjeto(camposRegistro);
         } catch (error) {
-            console.error();
+            console.error("Error en Crer o Actualizar", error);
         } 
     };
     
@@ -42,7 +43,20 @@ const AppForm = (props) => {
          }
          return true;
     };
-
+    useEffect(() => {
+        if(props.idActual === ""){
+            setObjeto({...camposRegistro});
+        }
+    }, [props.idActual]);
+    const obtenerDatosPorId = async (xId) =>{
+        const objPorId = doc(db, "persona", xId);
+        const docPorId = await getDoc(objPorId) ;
+        if(docPorId.exists()) {
+            setObjeto(docPorId.data());
+        }else{
+            console.log("No hay datos pipipi...")
+        }
+    }
     ///////////////////////////////////////////////////////////////////////
     ////////// UPDATE - fnUpdate - Actualizar /////////////////////////////
     ///////////////////////////////////////////////////////////////////////
@@ -63,7 +77,7 @@ const AppForm = (props) => {
                     onChange={handleStatusChange} value={objeto.genero}
                 />
                 <button>
-                    {props.idActual === "" ? "Guardar" : "Actualizar" }
+                    {props.idActual === "" ? "Guardar" : "Actualizar"}
                 </button>
             </form>
             

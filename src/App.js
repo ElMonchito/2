@@ -28,12 +28,16 @@ useEffect (( )=> {
   ///////////////////////////////////////////////////////////////////////
   
 
-  const fnDelete = () => {
-    console.log("Se elimino...");
+  const fnDelete = async(xId) => {
+    if(window.confirm("Confirma para eliminar Usuario")){
+      await deleteDoc(doc(db, 'persona', xId));
+      console.log("Se elimino..."+xId);
+    }
   };
 
   return (
-    <div style={{background:"black", padding:"10px", color:"cyan"}}>
+    <div className="container text-center">
+      <div className="container text-center"></div>
       <h1>Formulario</h1>
       <h3>READ / DELETE</h3>
       <AppForm {...{idActual, setIdActual}} />
@@ -45,7 +49,7 @@ useEffect (( )=> {
         ---
         <button onClick={() => setIdActual(p.id)}>Actualizar</button>
         <br></br>
-        </p> )
+        </p>)
       }      
     </div>
   );
